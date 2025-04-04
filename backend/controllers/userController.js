@@ -70,9 +70,10 @@ const loginUser = async (req, res) => {
 
 
 const getProfile = async (req, res) => {
-
+    // res.send('Get profile')
     try {
-        const {userId} = req.body
+        const {userId} = req
+        console.log(userId)
         const user = await userModel.findById(userId).select('-password');
         res.json({success:true, user });
 
