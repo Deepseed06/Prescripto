@@ -45,10 +45,21 @@ const Appointments = () => {
       let timeSlots = []
       while(currentDate < endTime){
         let formattedTime = currentDate.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
+        
+        let day = currentDate.getDate()
+        let month = currentDate.getMonth() + 1
+        let year = currentDate.getFullYear()
+
+        const slotDate = day + "-" + month + "-" + year
+        const slotTime = formattedTime
+
+        const isSlotAvailable = docInfo.slots_booked[slotDate] && docInfo.slots_booked[slotDate].includes(slotTime) ? false : true
+        if(isSlotAvailable){
         timeSlots.push({
           datetime: new Date(currentDate),
           time:formattedTime
         })
+      }
 
         currentDate.setMinutes(currentDate.getMinutes()+30)
       }
@@ -70,6 +81,7 @@ console.log(slotTime)
       let year = date.getFullYear()
 
       const slotDate = day + "-" + month + "-" + year
+
 
       const {data} = await axios.post(backendUrl + '/api/user/book-appointment', {docId, slotDate, slotTime},{headers:{token}})
       if(data.success){
@@ -137,7 +149,7 @@ console.log(slotTime)
             ))
           }
         </div>
-        <button onClick={bookAppointment} className='bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6 '>Book an appointment</button>
+        <button onClick={() => {return bookAppointment()}} className='bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6 '>Book an appointment</button>
       </div>
       <RelatedDoctors docId={docId} speciality={docInfo.speciality} />
     </div>
