@@ -1,20 +1,27 @@
-import jwt from 'jsonwebtoken'
+
+import jwt from 'jsonwebtoken';
 
 const authDoctor = async (req, res, next) => {
-    try {
-        const {dToken} = req.headers
-        
-        if (!dToken) {
-            return res.json({success: false, message: 'Not Authorized Login Again'})
-        }
-        const token_decode = jwt.verify(dToken, process.env.JWT_SECRET)
-        req.docId = token_decode.id; 
-        
-        next()
-    } catch (error) {
-        console.log(error)
-        res.json({success: false, message: error.message})
+  try {
+    const { dtoken } = req.headers;
+
+    // const token = req.headers.authorization;
+    // console.log('Token:', dtoken);
+
+
+    if (!dtoken) {
+      return res.json({ success: false, message: 'Not Authorized' });
     }
-}
+
+    const token_decode = jwt.verify(dtoken, process.env.JWT_SECRET);
+    // console.log('Decoded Token:', token_decode);
+
+    req.docId = token_decode.id;
+    next();
+  } catch (error) {
+    console.error('Error:', error);
+    res.json({ success: false, message: error.message });
+  }
+};
 
 export default authDoctor;

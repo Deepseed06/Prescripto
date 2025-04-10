@@ -58,7 +58,7 @@ const appointmentsDoctor = async(req, res) => {
     try {
         const {docId} = req
         const appointments = await appointmentModel.find({docId})
-        console.log(appointments)
+      
         res.json({success:true, appointments})
     } catch (error) {
         console.log(error)
@@ -66,9 +66,10 @@ const appointmentsDoctor = async(req, res) => {
     }
 }
 
-const appointmentComplete = async() => {
+const appointmentComplete = async(req, res) => {
     try {
-        const {docId, appointmentId} = req.body
+        const {appointmentId} = req.body
+        const {docId} = req
         const appointmentData = await appointmentModel.findById(appointmentId)
 
         if(appointmentData && appointmentData.docId === docId){
@@ -83,9 +84,10 @@ const appointmentComplete = async() => {
         res.json({success:false,message:error.message})
     }
 }
-const appointmentCancel = async() => {
+const appointmentCancel = async(req, res) => {
     try {
-        const {docId, appointmentId} = req.body
+        const { appointmentId} = req.body
+        const {docId} = req
         const appointmentData = await appointmentModel.findById(appointmentId)
 
         if(appointmentData && appointmentData.docId === docId){
@@ -101,8 +103,71 @@ const appointmentCancel = async() => {
     }
 }
 
-export {changeAvailability,
+const doctorDashboard = async (req, res) => {
+    try {
+        const { docId } = req
+        const appointments = await appointmentModel.find({ docId })
+        
+        let earnings = 0
+
+        appointments.map((item) => {
+            if (item.isCompleted) {
+                earnings += item.amount
+            }
+        })
+
+        let patients = []
+        appointments.map((item) => {
+            if (!patients.includes(item.userId)) {
+                patients.push(item.userId)
+            }
+        })
+
+        const dashData = {
+            earnings,
+            patients: patients.length,
+            appointments: appointments.length,
+            latestAppointments: appointments.reverse().slice(0, 5)
+        }
+
+        res.json({ success: true, dashData })
+    } catch (error) {
+        console.log(error)
+        res.json({ success: false, message: error.message })
+    }
+}
+
+
+const doctorProfile = async(req, res) => {
+    try {
+        
+        const {docId} = req
+        const profileData = await doctorModel.findById(docId).select('-password')
+        res.json({success:true, profileData})
+
+    } catch (error) {
+        console.log(error)
+        res.json({ success: false, message: error.message })
+    }
+
+}
+
+const updateDoctorProfile = async(req, res) => {
+    try {
+        const {docId} = req
+        const {fees, address, available} = req.body
+
+        await doctorModel.findByIdAndUpdate(docId,{fees, address, available})
+        res.json({success:true, message:'Profile Updated!'})
+    } catch (error) {
+        
+    }
+}
+
+export {
+    changeAvailability,
     doctorList, loginDctor, 
     appointmentsDoctor, appointmentCancel, 
-    appointmentComplete
+    appointmentComplete,doctorDashboard,
+    doctorProfile,updateDoctorProfile
 }
