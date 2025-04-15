@@ -11,6 +11,7 @@ const DoctorProfile = () => {
   const {dToken, profileData, setProfileData, getProfileData, backendUrl} = useContext(DoctorContext)
   const {currencySymbol} = useContext(AppContext)
   const [isEdit, setIsEdit] = useState(false)
+  console.log(profileData.address)
   const updateProfile = async () => {
     try {
       const updateData = {
@@ -80,8 +81,8 @@ const DoctorProfile = () => {
 
           {
             isEdit ?
-            <button onClick={updateProfile()} className='px-4 py-1 border-primary text-sm rounded-full mt-5 hover:text-white hover:bg-primary transition-all'>Save</button>
-            :<button onClick={() => setIsEdit(true)} className='px-4 py-1 border-primary text-sm rounded-full mt-5 hover:text-white hover:bg-primary transition-all'>Edit</button>
+            <button onClick={() => updateProfile()} className='px-4 py-1 border-primary text-sm rounded-full mt-5 hover:text-white hover:bg-primary transition-all'>Save</button>
+            :<button onClick={() => setIsEdit(true)} className='px-4 py-1 border-primary text-sm rounded-full mt-5 bg-indigo-100 hover:text-white hover:bg-primary transition-all'>Edit</button>
           }
           
         </div>

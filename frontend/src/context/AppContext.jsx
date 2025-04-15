@@ -11,7 +11,6 @@ const [userData, setUserData] = useState(false)
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 const currencySymbol = '$'
 
-// console.log(backendUrl)
 const getDoctorsData = async () => {
     // console.log('getting data')
     try {
