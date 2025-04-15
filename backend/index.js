@@ -10,16 +10,8 @@ import userRouter from './routes/userRoutes.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
-
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
 const corsOptions ={
-  origin:(origin, callback) => {
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }, 
+  origin:process.env.PORT, 
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200
 }
