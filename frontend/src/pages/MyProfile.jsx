@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 const MyProfile = () => {
   const{userData, setUserData, loadUserProfileData, token, backendUrl} = useContext(AppContext)
   
-
+console.log(userData)
   const [isEdit, setIsEdit] = useState(false);
   const [image, setImage] = useState(false);
 
@@ -20,7 +20,6 @@ const MyProfile = () => {
       formData.append('address', JSON.stringify(userData.address))
       formData.append('gender', userData.gender)
       formData.append('dob', userData.dob)
-
       image && formData.append('image', image)
       const {data} = await axios.post(backendUrl + '/api/user/update-profile', formData, {headers:{token}})
       if(data.success){
@@ -36,6 +35,7 @@ const MyProfile = () => {
       toast.error(error.message)
     }
   }
+
 
   return userData && (
     <div className='max-w-lg flex flex-col gap-2 text-sm '>

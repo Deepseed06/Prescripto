@@ -12,11 +12,9 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL
 const currencySymbol = '$'
 
 const getDoctorsData = async () => {
-    // console.log('getting data')
     try {
         const {data} = await axios.get(backendUrl + '/api/doctor/list')
         if(data.success){
-            console.log('data fetched')
             setDoctors(data.doctors)
         }else{
             toast.error(data.message)
@@ -31,6 +29,7 @@ const getDoctorsData = async () => {
 const loadUserProfileData = async() => {
     try {
         const {data} = await axios.get(backendUrl + '/api/user/get-profile',{headers:{token}})
+        console.log(data)
         if(data.success){
             setUserData(data.user)
            
@@ -46,7 +45,6 @@ const loadUserProfileData = async() => {
 }
 
 
-
 useEffect(() => {
     getDoctorsData()
 }
@@ -59,7 +57,7 @@ useEffect(() => {
         setUserData(false)
     }
 }
-, [token])
+, [ token])
 const value = {
     doctors,
     currencySymbol,
