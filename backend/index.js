@@ -11,9 +11,9 @@ import userRouter from './routes/userRoutes.js';
 const app = express();
 const port = process.env.PORT || 5000;
 const corsOptions ={
-  origin:process.env.FRONTEND_URL, 
+  origin:'*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization','token'],
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200
 }
