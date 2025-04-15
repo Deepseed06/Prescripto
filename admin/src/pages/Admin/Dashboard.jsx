@@ -9,7 +9,7 @@ const Dashboard = () => {
 
   const {aToken, cancelAppointment, dashData, getDashData} = useContext(AdminContext)
 
-  const {slotDatFormat} = useContext(AppContext)
+  const {slotDateFormat} = useContext(AppContext)
   useEffect(() => {
     if(aToken){
       getDashData()
