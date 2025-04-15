@@ -11,10 +11,13 @@ const [userData, setUserData] = useState(false)
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 const currencySymbol = '$'
 
+// console.log(backendUrl)
 const getDoctorsData = async () => {
+    // console.log('getting data')
     try {
         const {data} = await axios.get(backendUrl + '/api/doctor/list')
         if(data.success){
+            console.log('data fetched')
             setDoctors(data.doctors)
         }else{
             toast.error(data.message)
@@ -43,12 +46,6 @@ const loadUserProfileData = async() => {
     }
 }
 
-const value = {
-    doctors,
-    currencySymbol,
-    token, setToken, backendUrl, 
-    userData, setUserData, loadUserProfileData, getDoctorsData
-}
 
 
 useEffect(() => {
@@ -64,6 +61,14 @@ useEffect(() => {
     }
 }
 , [token])
+const value = {
+    doctors,
+    currencySymbol,
+    token, setToken, backendUrl, 
+    userData, setUserData, loadUserProfileData, getDoctorsData
+}
+
+
 return (
     <AppContext.Provider value={value}>
         {props.children}

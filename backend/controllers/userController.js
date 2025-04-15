@@ -4,7 +4,6 @@ import bcrypt from 'bcryptjs';
 import Razorpay from 'razorpay';
 import jwt from 'jsonwebtoken';
 import razorpay from 'razorpay'
-import _ from 'lodash';
 import{v2 as cloudinary} from 'cloudinary'
 import doctorModel from '../models/doctorModel.js';
 import appointmentModel from '../models/appointmentModel.js';
