@@ -11,7 +11,6 @@ const DoctorProfile = () => {
   const {dToken, profileData, setProfileData, getProfileData, backendUrl} = useContext(DoctorContext)
   const {currencySymbol} = useContext(AppContext)
   const [isEdit, setIsEdit] = useState(false)
-  console.log(profileData.address)
   const updateProfile = async () => {
     try {
       const updateData = {

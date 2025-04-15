@@ -13,7 +13,7 @@ const port = process.env.PORT || 5000;
 const corsOptions ={
   origin:'*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization','token'],
+  allowedHeaders: ['Content-Type', 'Authorization','token', 'dtoken'],
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200
 }
