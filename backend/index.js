@@ -18,7 +18,7 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Enables preflight for all routes
+app.options(/(.*)/, cors(corsOptions)); // or app.options('/*', cors(corsOptions));
 app.use(express.json());
 
 app.use('/api/admin', adminRouter);
