@@ -11,10 +11,9 @@ import userRouter from './routes/userRoutes.js';
 const app = express();
 const port = process.env.PORT || 5000;
 const corsOptions = {
-    origin: 'https://prescripto-frontend-sand.vercel.app', // Or '*' if you remove credentials
+    origin: '*', // Or '*' if you remove credentials
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization', 'token', 'dtoken', 'atoken'],
-    credentials: true,
     optionsSuccessStatus: 200
 }
 
