@@ -10,15 +10,23 @@ import userRouter from './routes/userRoutes.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
-const corsOptions = {
-    origin: "*", // Or '*' if you remove credentials
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'token', 'dtoken', 'atoken'],
-    optionsSuccessStatus: 200
-}
+import express from 'express';
+import cors from 'cors';
 
-app.options(/(.*)/, cors(corsOptions)); // or app.options('/*', cors(corsOptions));
-app.use(cors(corsOptions));
+const app = express();
+
+// 1. Force explicit CORS & Preflight handling for all incoming requests
+app.use(cors({
+    origin: true, // Dynamically allows the requesting frontend origin
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'token', 'dtoken', 'atoken']
+}));
+
+// 2. Guarantee preflight options requests pass instantly
+app.options('*', cors());
+
+app.use(express.json());
 app.use(express.json());
 
 app.use('/api/admin', adminRouter);
