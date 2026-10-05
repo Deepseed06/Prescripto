@@ -10,17 +10,16 @@ import userRouter from './routes/userRoutes.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
-const corsOptions ={
-  origin:'*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization','token', 'dtoken','atoken'],
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200
+const corsOptions = {
+    origin: 'https://prescripto-frontend-sand.vercel.app', // Or '*' if you remove credentials
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'token', 'dtoken', 'atoken'],
+    credentials: true,
+    optionsSuccessStatus: 200
 }
-connectDB()
-connectCloudinary()
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Enables preflight for all routes
 app.use(express.json());
 
 app.use('/api/admin', adminRouter);
